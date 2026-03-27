@@ -1,0 +1,100 @@
+<Page x:Class="YouTubeDownloader.Views.HistoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:YouTubeDownloader.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,24">
+            <TextBlock Text="下载历史" FontSize="28" FontWeight="Bold"/>
+            <Button Content="清空全部"
+                    Command="{Binding ClearAllCommand}"
+                    Margin="24,0,0,0"
+                    VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1"
+                  x:Name="HistoryListView"
+                  ItemsSource="{Binding HistoryRecords}"
+                  SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                            CornerRadius="8"
+                            Padding="16"
+                            Margin="0,4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding Title}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                    <TextBlock Text="{Binding DownloadedAtText}"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               FontSize="12"/>
+                                    <TextBlock Text=" | " Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Format}"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               FontSize="12"/>
+                                    <TextBlock Text=" | " Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Quality}"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               FontSize="12"/>
+                                    <TextBlock Text=" | " Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Status}"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               FontSize="12"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding FilePath}"
+                                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                           FontSize="11"
+                                           TextTrimming="CharacterEllipsis"
+                                           Margin="0,4,0,0"
+                                           Visibility="{Binding HasFilePath, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Content="打开文件"
+                                        Click="OpenFileButton_Click"
+                                        Tag="{Binding}"
+                                        Width="90"/>
+                                <Button Content="打开文件夹"
+                                        Click="OpenFolderButton_Click"
+                                        Tag="{Binding}"
+                                        Width="100"
+                                        Margin="8,0,0,0"/>
+                                <Button Content="删除记录"
+                                        Click="DeleteRecordButton_Click"
+                                        Tag="{Binding}"
+                                        Width="90"
+                                        Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock Grid.Row="1"
+                   Text="暂无下载历史"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                   Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"/>
+    </Grid>
+</Page>

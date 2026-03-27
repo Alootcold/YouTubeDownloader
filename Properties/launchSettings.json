@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "YouTubeDownloader (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "YouTubeDownloader (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

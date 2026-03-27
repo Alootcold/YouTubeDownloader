@@ -1,0 +1,74 @@
+<Page x:Class="YouTubeDownloader.Views.DownloadListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:YouTubeDownloader.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="下载列表" FontSize="28" FontWeight="Bold" Margin="0,0,0,24"/>
+
+        <ListView Grid.Row="1"
+                  x:Name="DownloadListView"
+                  ItemsSource="{Binding DownloadTasks}"
+                  SelectedItem="{Binding SelectedTask, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                            CornerRadius="8"
+                            Padding="16"
+                            Margin="0,4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding VideoInfo.Title}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <TextBlock Text="{Binding Status}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text=" | " Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text="{Binding ProgressText}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                </StackPanel>
+                                <ProgressBar Value="{Binding Progress}"
+                                             Maximum="100"
+                                             Height="4"
+                                             Margin="0,8,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Content="暂停"
+                                        Click="PauseButton_Click"
+                                        Tag="{Binding}"
+                                        Width="70"/>
+                                <Button Content="取消"
+                                        Click="CancelButton_Click"
+                                        Tag="{Binding}"
+                                        Width="70"
+                                        Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock Grid.Row="1"
+                   Text="暂无下载任务"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                   Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"/>
+    </Grid>
+</Page>
