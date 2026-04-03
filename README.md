@@ -39,7 +39,7 @@
 
 ### 安装方式
 
-1. 从 [Microsoft Store](https://apps.microsoft.com) 下载并安装
+1. 从 [Microsoft Store](https://apps.microsoft.com/detail/9p7gwpc2pnjd?hl=zh-CN&gl=CN) 下载并安装
 
 ### 使用方法
 
